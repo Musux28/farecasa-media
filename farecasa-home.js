@@ -212,6 +212,14 @@
       if (window.ResizeObserver) new ResizeObserver(function () { self._layout(); self._size(); }).observe(this);
     }
     _layout() {
+      var vw = window.innerWidth, par = this.parentElement;
+      if (vw < 768 && this.getBoundingClientRect().width > vw + 2) {
+        this.style.width = vw + 'px';
+        if (par && par !== document.body) { par.style.width = vw + 'px'; par.style.maxWidth = '100vw'; }
+      }
+      var off = this._offAttr || 0, hd = document.getElementById('SITE_HEADER');
+      if (hd) { var hp = getComputedStyle(hd).position; off = (hp === 'sticky' || hp === 'fixed') ? Math.round(hd.getBoundingClientRect().height) : 0; }
+      if (off !== this._off) { this._off = off; this.style.setProperty('--off', off + 'px'); }
       var w = this.getBoundingClientRect().width || window.innerWidth;
       this.classList.toggle('m', w < 768); this.classList.toggle('xl', w >= 1280);
       var vh = window.innerHeight;
@@ -221,8 +229,7 @@
       if (sh !== this._sh) { this._sh = sh; this.style.setProperty('--sh', sh + 'px'); }
     }
     _attrs() {
-      this._off = parseInt(this.getAttribute('offset-top') || '0', 10) || 0;
-      this.style.setProperty('--off', this._off + 'px');
+      this._offAttr = parseInt(this.getAttribute('offset-top') || '0', 10) || 0;
       this._layout(); this._size(); this._update();
     }
     _size() {
