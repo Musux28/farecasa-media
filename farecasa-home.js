@@ -84,6 +84,7 @@
     '.hud{position:absolute;left:0;right:0;top:0;padding:14px 16px;display:flex;flex-direction:column;gap:10px;background:linear-gradient(rgba(28,27,25,.55),rgba(28,27,25,0));color:#fff;font-family:"Space Grotesk",sans-serif;font-size:12px;letter-spacing:.12em}',
     '.hud .t{display:flex;justify-content:space-between}.bar{height:3px;background:rgba(255,255,255,.35)}.bar b{display:block;height:3px;width:0;background:#fff}',
     '.panel{height:100%;min-width:420px;display:flex;flex-direction:column;gap:14px}.ptop{display:flex;justify-content:space-between;align-items:center;gap:16px}.nome2{font-family:"Space Grotesk",sans-serif;font-size:13px;letter-spacing:.14em;color:#5E5A54}.fbtn{display:flex;gap:8px}.fbtn button{width:44px;height:44px;padding:0;border:1px solid rgba(28,27,25,.25);background:#fff;color:#1C1B19;font:700 14px "Space Grotesk",sans-serif;cursor:pointer}.fbtn button.v{border-color:var(--blu)}.fbtn button.on{background:var(--blu);border-color:var(--blu);color:#fff}.pbar{height:4px;background:rgba(28,27,25,.1)}.pbar b{display:block;height:4px;width:0;background:var(--blu)}.panel .media{height:calc(var(--sh,760px) - 132px);align-self:center}:host(:not(.m)) .hud{display:none}.fchips{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}.fchips span,.fchips a{background:#fff;border:1px solid rgba(28,27,25,.16);padding:10px 16px;font-size:15px;text-decoration:none;color:#1C1B19}.fchips a{border-color:var(--blu);color:var(--blu);font-weight:600}.card.on{pointer-events:auto}.pwrap{flex:1 1 0;min-width:0;height:100%;display:flex;justify-content:center}:host(.m) .pwrap{position:absolute;inset:0;display:block}:host(:not(.m)) .stage{width:940px;margin:0 auto;padding:28px 0;justify-content:space-between}:host(.xl) .stage{width:min(1480px,calc(100% - 128px))}:host(.xl) .hero .r{flex-basis:420px}',
+    '.dove{padding-top:56px}.dv{display:flex;flex-wrap:wrap;gap:16px;align-items:stretch}.map{flex:999 1 520px;min-height:460px;background:#E9E3D9;position:relative}.map iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.dcard{flex:1 1 360px;background:#fff;border:1px solid rgba(28,27,25,.12);padding:32px;display:flex;flex-direction:column;gap:18px}.dcard h2{font-size:44px}.dk{font-size:13px;letter-spacing:.12em;color:#5E5A54}.dvv{font-size:18px;margin-top:4px;line-height:1.5}.dvv a{text-decoration:none;font-weight:600}.dbtn{display:flex;flex-direction:column;gap:10px;margin-top:auto}:host(.m) .map{flex-basis:100%;min-height:320px}:host(.m) .dcard{padding:22px}:host(.m) .dcard h2{font-size:32px}:host(.m) .dove{padding-top:32px}:host(.xl) .dcard h2{font-size:52px}:host(.xl) .dvv{font-size:20px}:host(.xl) .map{min-height:560px}',
     '.dots{display:none;gap:8px;margin-top:20px}.dot{width:28px;height:4px;background:rgba(28,27,25,.15)}.dot.on{background:var(--blu)}',
     '.two{display:flex;flex-wrap:wrap;gap:16px}.box{background:#fff;border:1px solid rgba(28,27,25,.12);padding:36px;display:flex;flex-direction:column;gap:14px}',
     '.box.b{background:var(--blu);color:#fff}.box.b p{color:#fff}.box.b .k{color:#fff}',
@@ -155,6 +156,23 @@
       '<section class="w sec" id="fc-social" style="padding-top:0"><span class="k">Social</span><h2 style="margin:12px 0 32px">Seguici, ogni settimana un cantiere nuovo.</h2><div class="soc">' + soc + '</div></section>';
   }
 
+  function htmlDove() {
+    var q = 'Fare Casa Ceramiche, Viale Don Luigi Sturzo 157, 95014 Giarre CT';
+    var map = 'https://www.google.com/maps?q=' + encodeURIComponent(q) + '&output=embed';
+    var link = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q);
+    var riga = function (k, v) { return '<div><div class="dk">' + k + '</div><div class="dvv">' + v + '</div></div>'; };
+    return '<style>' + CSS + '</style>' +
+      '<section class="w sec dove" id="fc-dove"><div class="dv">' +
+      '<div class="map"><iframe src="' + map + '" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mappa: Fare Casa Ceramiche a Giarre" allowfullscreen></iframe></div>' +
+      '<div class="dcard"><span class="k">Dove siamo</span><h2>Vieni in showroom.</h2>' +
+      riga('INDIRIZZO', 'Viale Don Luigi Sturzo 157<br>95014 Giarre (CT)') +
+      riga('TELEFONO', '<a href="tel:+390957167068">095 716 7068</a>') +
+      riga('CELLULARE E WHATSAPP', '<a href="https://wa.me/393911164060" target="_blank" rel="noopener">+39 391 116 4060</a>') +
+      riga('ORARI', 'Lunedì – Sabato<br>9:00 – 13:00 · 16:00 – 20:00<br><span style="color:#5E5A54">Domenica chiuso</span>') +
+      '<div class="dbtn"><a class="btn p" href="https://wa.me/393911164060" target="_blank" rel="noopener">Scrivici su WhatsApp</a><a class="btn" href="tel:+390957167068">Chiama</a><a class="btn" href="' + link + '" target="_blank" rel="noopener">Apri in Google Maps</a></div>' +
+      '</div></div></section>';
+  }
+
   class FarecasaHome extends HTMLElement {
     constructor() {
       super();
@@ -175,11 +193,11 @@
       window.addEventListener('resize', this._onScroll);
       window.addEventListener('resize', this._layout.bind(this));
       window.addEventListener('hashchange', this._onHash);
-      document.addEventListener('click', this._onDocClick, true);
+      if (!this._dove) document.addEventListener('click', this._onDocClick, true);
       window.addEventListener('touchstart', this._prime, { passive: true, once: true });
       window.addEventListener('pointerdown', this._prime, { passive: true, once: true });
       var self = this;
-      setTimeout(function () { self._hash(); self._size(); }, 600);
+      setTimeout(function () { if (!self._dove) self._hash(); self._size(); }, 600);
       setTimeout(function () { self._size(); }, 2500);
       window.addEventListener('load', function () { self._size(); });
       var n = 0, iv = setInterval(function () { self._size(); if (++n > 12) clearInterval(iv); }, 1500);
@@ -194,15 +212,15 @@
     }
     _build() {
       this._built = true;
-      this._r.innerHTML = html() + '<div class="altezza" hidden></div>';
+      this._dove = (this.getAttribute('sezione') || '').toLowerCase() === 'dove';
+      this._r.innerHTML = (this._dove ? htmlDove() : html()) + '<div class="altezza" hidden></div>';
       var q = this._r.querySelector.bind(this._r);
       this._story = q('.story'); this._stage = q('.stage'); this._vid = q('.bv');
       this._cards = Array.prototype.slice.call(this._r.querySelectorAll('.card'));
       this._dots = Array.prototype.slice.call(this._r.querySelectorAll('.dot'));
       this._nome = q('.nome'); this._nome2 = q('.nome2'); this._pbar = q('.pbar b'); this._fb = Array.prototype.slice.call(this._r.querySelectorAll('.fbtn button')); this._numf = q('.numf'); this._bar = q('.bar b'); this._alt = q('.altezza');
-      this._vid.muted = true;
       var self = this;
-      this._vid.addEventListener('loadedmetadata', function () { self._update(); });
+      if (this._vid) { this._vid.muted = true; this._vid.addEventListener('loadedmetadata', function () { self._update(); }); }
       this._r.addEventListener('click', function (e) {
         var a = e.target.closest && e.target.closest('[data-go]');
         if (a) { e.preventDefault(); self.vai(a.getAttribute('data-go')); return; }
@@ -234,7 +252,7 @@
     }
     _size() {
       if (!this._alt) return;
-      var last = this._r.querySelector('#fc-social');
+      var last = this._r.querySelector(this._dove ? '#fc-dove' : '#fc-social');
       var h = last ? last.getBoundingClientRect().bottom - this.getBoundingClientRect().top : this.offsetHeight;
       this._h = h;
       if (this.getAttribute('altezza-auto') !== 'no' && h > 200) {
@@ -255,6 +273,7 @@
         y = this.getBoundingClientRect().bottom + window.scrollY - this._off;
       } else {
         var el = this._r.getElementById('fc-' + nome);
+        if (!el) { var all = document.querySelectorAll('farecasa-home'); for (var i = 0; i < all.length && !el; i++) { if (all[i].shadowRoot) el = all[i].shadowRoot.getElementById('fc-' + nome); } }
         if (!el) return;
         y = el.getBoundingClientRect().top + window.scrollY - this._off - 16;
       }
