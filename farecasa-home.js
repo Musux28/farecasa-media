@@ -156,13 +156,13 @@
       '<section class="w sec" id="fc-social" style="padding-top:0"><span class="k">Social</span><h2 style="margin:12px 0 32px">Seguici, ogni settimana un cantiere nuovo.</h2><div class="soc">' + soc + '</div></section>';
   }
 
-  function htmlDove() {
+  function htmlDove(solo) {
     var q = 'Fare Casa Ceramiche, Viale Don Luigi Sturzo 157, 95014 Giarre CT';
     var map = 'https://www.google.com/maps?q=' + encodeURIComponent(q) + '&output=embed';
     var link = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q);
     var riga = function (k, v) { return '<div><div class="dk">' + k + '</div><div class="dvv">' + v + '</div></div>'; };
-    return '<style>' + CSS + '</style>' +
-      '<section class="w sec dove" id="fc-dove"><div class="dv">' +
+    return (solo ? '<style>' + CSS + '</style>' : '') +
+      '<section class="w sec dove" id="fc-dove"' + (solo ? '' : ' style="padding-top:0"') + '><div class="dv">' +
       '<div class="map"><iframe src="' + map + '" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mappa: Fare Casa Ceramiche a Giarre" allowfullscreen></iframe></div>' +
       '<div class="dcard"><span class="k">Dove siamo</span><h2>Vieni in showroom.</h2>' +
       riga('INDIRIZZO', 'Viale Don Luigi Sturzo 157<br>95014 Giarre (CT)') +
@@ -213,7 +213,7 @@
     _build() {
       this._built = true;
       this._dove = (this.getAttribute('sezione') || '').toLowerCase() === 'dove';
-      this._r.innerHTML = (this._dove ? htmlDove() : html()) + '<div class="altezza" hidden></div>';
+      this._r.innerHTML = (this._dove ? htmlDove(true) : html() + htmlDove(false)) + '<div class="altezza" hidden></div>';
       var q = this._r.querySelector.bind(this._r);
       this._story = q('.story'); this._stage = q('.stage'); this._vid = q('.bv');
       this._cards = Array.prototype.slice.call(this._r.querySelectorAll('.card'));
@@ -252,7 +252,7 @@
     }
     _size() {
       if (!this._alt) return;
-      var last = this._r.querySelector(this._dove ? '#fc-dove' : '#fc-social');
+      var last = this._r.querySelector('#fc-dove');
       var h = last ? last.getBoundingClientRect().bottom - this.getBoundingClientRect().top : this.offsetHeight;
       this._h = h;
       if (this.getAttribute('altezza-auto') !== 'no' && h > 200) {
