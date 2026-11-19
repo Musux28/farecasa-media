@@ -84,6 +84,7 @@
     '.hud{position:absolute;left:0;right:0;top:0;padding:14px 16px;display:flex;flex-direction:column;gap:10px;background:linear-gradient(rgba(28,27,25,.55),rgba(28,27,25,0));color:#fff;font-family:"Space Grotesk",sans-serif;font-size:12px;letter-spacing:.12em}',
     '.hud .t{display:flex;justify-content:space-between}.bar{height:3px;background:rgba(255,255,255,.35)}.bar b{display:block;height:3px;width:0;background:#fff}',
     '.panel{height:100%;min-width:420px;display:flex;flex-direction:column;gap:14px}.ptop{display:flex;justify-content:space-between;align-items:center;gap:16px}.nome2{font-family:"Space Grotesk",sans-serif;font-size:13px;letter-spacing:.14em;color:#5E5A54}.fbtn{display:flex;gap:8px}.fbtn button{width:44px;height:44px;padding:0;border:1px solid rgba(28,27,25,.25);background:#fff;color:#1C1B19;font:700 14px "Space Grotesk",sans-serif;cursor:pointer}.fbtn button.v{border-color:var(--blu)}.fbtn button.on{background:var(--blu);border-color:var(--blu);color:#fff}.pbar{height:4px;background:rgba(28,27,25,.1)}.pbar b{display:block;height:4px;width:0;background:var(--blu)}.panel .media{height:calc(var(--sh,760px) - 132px);align-self:center}:host(:not(.m)) .hud{display:none}.fchips{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}.fchips span,.fchips a{background:#fff;border:1px solid rgba(28,27,25,.16);padding:10px 16px;font-size:15px;text-decoration:none;color:#1C1B19}.fchips a{border-color:var(--blu);color:var(--blu);font-weight:600}.card.on{pointer-events:auto}.pwrap{flex:1 1 0;min-width:0;height:100%;display:flex;justify-content:center}:host(.m) .pwrap{position:absolute;inset:0;display:block}:host(:not(.m)) .stage{width:940px;margin:0 auto;padding:28px 0;justify-content:space-between}:host(.xl) .stage{width:min(1480px,calc(100% - 128px))}:host(.xl) .hero .r{flex-basis:420px}',
+    '.prev{background:#E9E3D9}.pv{display:flex;flex-wrap:wrap;gap:56px;align-items:flex-start;padding-top:104px;padding-bottom:104px}.pvl{flex:1 1 400px;display:flex;flex-direction:column;gap:20px}.pvr{flex:1 1 480px;background:#fff;padding:36px;position:relative}.frm{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.frm label{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600}.frm .full{grid-column:1/-1}.frm input,.frm select,.frm textarea{border:1px solid rgba(28,27,25,.3);padding:14px;font-size:16px;font-family:inherit;background:#fff;color:#1C1B19;border-radius:0;width:100%;box-sizing:border-box}.frm textarea{resize:vertical}.frm input:focus,.frm select:focus,.frm textarea:focus{outline:2px solid var(--blu);outline-offset:0}.frm .chk{flex-direction:row;align-items:flex-start;gap:10px;font-weight:400;line-height:1.5;color:#3E3B36}.frm .chk input{width:20px;height:20px;flex:0 0 auto;margin:0;padding:0}.frm .btn{width:100%;font-size:17px;min-height:56px}.frm .btn[disabled]{opacity:.6;cursor:wait}.err{color:#B00020;font-size:15px;margin:0}.ok{display:flex;flex-direction:column;gap:14px;padding:24px 0}.ok[hidden],.err[hidden],.frm[hidden]{display:none}.ok h3{font-size:34px}.ok .btn{align-self:flex-start}:host(.m) .pv{gap:24px;padding-top:52px;padding-bottom:52px}:host(.m) .pvr{padding:20px;flex-basis:100%}:host(.m) .frm{grid-template-columns:1fr}:host(.m) .pvl h2{font-size:32px}:host(.xl) .pvr{padding:44px}',
     '.dove{padding-top:56px}.dv{display:flex;flex-wrap:wrap;gap:16px;align-items:stretch}.map{flex:999 1 520px;min-height:460px;background:#E9E3D9;position:relative}.map iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.dcard{flex:1 1 360px;background:#fff;border:1px solid rgba(28,27,25,.12);padding:32px;display:flex;flex-direction:column;gap:18px}.dcard h2{font-size:44px}.dk{font-size:13px;letter-spacing:.12em;color:#5E5A54}.dvv{font-size:18px;margin-top:4px;line-height:1.5}.dvv a{text-decoration:none;font-weight:600}.dbtn{display:flex;flex-direction:column;gap:10px;margin-top:auto}:host(.m) .map{flex-basis:100%;min-height:320px}:host(.m) .dcard{padding:22px}:host(.m) .dcard h2{font-size:32px}:host(.m) .dove{padding-top:32px}:host(.xl) .dcard h2{font-size:52px}:host(.xl) .dvv{font-size:20px}:host(.xl) .map{min-height:560px}',
     '.dots{display:none;gap:8px;margin-top:20px}.dot{width:28px;height:4px;background:rgba(28,27,25,.15)}.dot.on{background:var(--blu)}',
     '.two{display:flex;flex-wrap:wrap;gap:16px}.box{background:#fff;border:1px solid rgba(28,27,25,.12);padding:36px;display:flex;flex-direction:column;gap:14px}',
@@ -156,13 +157,33 @@
       '<section class="w sec" id="fc-social" style="padding-top:0"><span class="k">Social</span><h2 style="margin:12px 0 32px">Seguici, ogni settimana un cantiere nuovo.</h2><div class="soc">' + soc + '</div></section>';
   }
 
+  var EMAIL_TO = 'farecasa@live.com', EMAIL_CC = 'aaiello976@gmail.com';
+  function htmlPrev() {
+    var opt = ['Bagno', 'Cucina', 'Pavimenti', 'Casa intera', 'Solo materiali', 'Altro'].map(function (o) { return '<option>' + o + '</option>'; }).join('');
+    return '<section class="prev" id="fc-contatti"><div class="w pv">' +
+      '<div class="pvl"><span class="k">Richiedi un preventivo</span><h2>Raccontaci cosa vuoi rifare. Ti richiamiamo noi.</h2>' +
+      '<p class="lead">Lasciaci il tuo numero e due righe sul lavoro: ti ricontattiamo per fissare un sopralluogo o un appuntamento in showroom.</p>' +
+      '<p>Preferisci scriverci subito? <a href="https://wa.me/393911164060" target="_blank" rel="noopener" style="font-weight:600;color:var(--blu)">Scrivici su WhatsApp</a></p></div>' +
+      '<div class="pvr"><form class="frm" novalidate>' +
+      '<label>Nome e cognome *<input name="nome" type="text" autocomplete="name" required></label>' +
+      '<label>Telefono *<input name="telefono" type="tel" autocomplete="tel" required></label>' +
+      '<label>Email<input name="email" type="email" autocomplete="email"></label>' +
+      '<label>Cosa vuoi rifare?<select name="lavoro">' + opt + '</select></label>' +
+      '<label class="full">Messaggio<textarea name="messaggio" rows="4" placeholder="Es. vorrei rifare il bagno di circa 6 mq a Giarre"></textarea></label>' +
+      '<input type="text" name="_honey" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">' +
+      '<label class="full chk"><input type="checkbox" name="privacy" required><span>Ho letto l\'informativa sulla privacy e acconsento al trattamento dei miei dati per essere ricontattato. *</span></label>' +
+      '<p class="err full" hidden></p>' +
+      '<button type="submit" class="btn p full">Invia la richiesta</button></form>' +
+      '<div class="ok" hidden><h3>Grazie, richiesta inviata!</h3><p>Ti richiameremo al più presto. Se è urgente chiamaci allo <a href="tel:+390957167068">095 716 7068</a>.</p><button type="button" class="btn nuova">Invia un\'altra richiesta</button></div>' +
+      '</div></div></section>';
+  }
   function htmlDove(solo) {
     var q = 'Fare Casa Ceramiche, Viale Don Luigi Sturzo 157, 95014 Giarre CT';
     var map = 'https://www.google.com/maps?q=' + encodeURIComponent(q) + '&output=embed';
     var link = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q);
     var riga = function (k, v) { return '<div><div class="dk">' + k + '</div><div class="dvv">' + v + '</div></div>'; };
     return (solo ? '<style>' + CSS + '</style>' : '') +
-      '<section class="w sec dove" id="fc-dove"' + (solo ? '' : ' style="padding-top:0"') + '><div class="dv">' +
+      '<section class="w sec dove" id="fc-dove"' + '' + '><div class="dv">' +
       '<div class="map"><iframe src="' + map + '" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mappa: Fare Casa Ceramiche a Giarre" allowfullscreen></iframe></div>' +
       '<div class="dcard"><span class="k">Dove siamo</span><h2>Vieni in showroom.</h2>' +
       riga('INDIRIZZO', 'Viale Don Luigi Sturzo 157<br>95014 Giarre (CT)') +
@@ -213,7 +234,7 @@
     _build() {
       this._built = true;
       this._dove = (this.getAttribute('sezione') || '').toLowerCase() === 'dove';
-      this._r.innerHTML = (this._dove ? htmlDove(true) : html() + htmlDove(false)) + '<div class="altezza" hidden></div>';
+      this._r.innerHTML = (this._dove ? htmlDove(true) : html() + htmlPrev() + htmlDove(false)) + '<div class="altezza" hidden></div>';
       var q = this._r.querySelector.bind(this._r);
       this._story = q('.story'); this._stage = q('.stage'); this._vid = q('.bv');
       this._cards = Array.prototype.slice.call(this._r.querySelectorAll('.card'));
@@ -227,6 +248,29 @@
         var b = e.target.closest && e.target.closest('[data-fase]');
         if (b) { e.preventDefault(); self.vaiFase(+b.getAttribute('data-fase')); }
       });
+      var frm = this._r.querySelector('.frm');
+      if (frm) {
+        var ok = this._r.querySelector('.ok'), err = frm.querySelector('.err'), btn = frm.querySelector('button[type=submit]');
+        frm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var d = new FormData(frm), mostra = function (t) { err.textContent = t; err.hidden = !t; self._size(); };
+          if (d.get('_honey')) return;
+          if (!String(d.get('nome') || '').trim()) return mostra('Scrivi il tuo nome e cognome.');
+          if (String(d.get('telefono') || '').replace(/\D/g, '').length < 6) return mostra('Scrivi un numero di telefono valido.');
+          if (!d.get('privacy')) return mostra('Per inviare la richiesta devi accettare l’informativa sulla privacy.');
+          mostra('');
+          btn.disabled = true; btn.textContent = 'Invio in corso…';
+          var dati = { 'Nome e cognome': d.get('nome'), 'Telefono': d.get('telefono'), 'Email': d.get('email') || '-', 'Lavoro': d.get('lavoro'), 'Messaggio': d.get('messaggio') || '-',
+            _subject: 'Nuova richiesta di preventivo dal sito: ' + d.get('lavoro'), _cc: EMAIL_CC, _template: 'table', _captcha: 'false' };
+          if (d.get('email')) dati._replyto = d.get('email');
+          fetch('https://formsubmit.co/ajax/' + EMAIL_TO, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(dati) })
+            .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok || String(j.success) === 'false') throw new Error(j.message || 'errore'); }); })
+            .then(function () { frm.hidden = true; ok.hidden = false; frm.reset(); self._size(); })
+            .catch(function () { mostra('Non siamo riusciti a inviare la richiesta. Riprova, oppure chiamaci allo 095 716 7068 o scrivici su WhatsApp.'); })
+            .then(function () { btn.disabled = false; btn.textContent = 'Invia la richiesta'; });
+        });
+        this._r.querySelector('.nuova').addEventListener('click', function () { ok.hidden = true; frm.hidden = false; self._size(); });
+      }
       if (window.ResizeObserver) new ResizeObserver(function () { self._layout(); self._size(); }).observe(this);
     }
     _layout() {
@@ -269,7 +313,7 @@
     }
     vai(nome) {
       var y;
-      if (nome === 'contatti') {
+      if (nome === 'contatti' && !this._r.getElementById('fc-contatti')) {
         y = this.getBoundingClientRect().bottom + window.scrollY - this._off;
       } else {
         var el = this._r.getElementById('fc-' + nome);
