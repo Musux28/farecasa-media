@@ -222,7 +222,7 @@
       if (this.getAttribute('altezza-auto') !== 'no' && h > 200) {
         var hp = Math.ceil(h) + 'px';
         if (this.style.height !== hp) {
-          this.style.height = hp;
+          this.style.height = hp; this.style.minHeight = hp; this.style.maxHeight = hp;
           var par = this.parentElement;
           if (par && par !== document.body) { par.style.height = hp; par.style.minHeight = hp; }
         }
