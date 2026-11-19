@@ -10,8 +10,8 @@
 (function () {
   if (customElements.get('farecasa-home')) return;
   var BASE = 'https://cdn.jsdelivr.net/gh/Musux28/farecasa-media@v1/';
-  var IMG = function (f) { return BASE + 'img/' + f; };
-  var VID = function (f) { return BASE + 'video/' + f; };
+  var IMG = function (f) { return BASE + f; };
+  var VID = function (f) { return BASE + f; };
 
   var FASI = [
     ['Sopralluogo', 'OGGI', "Partiamo dal bagno com'è adesso. Veniamo a casa tua, prendiamo le misure e ascoltiamo come lo vuoi vivere."],
