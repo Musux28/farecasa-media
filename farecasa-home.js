@@ -97,6 +97,7 @@
     '.soc small{font-size:14px;color:#5E5A54}.soc b{font-family:"Space Grotesk",sans-serif;font-size:24px}.soc em{font-style:normal;color:var(--blu);font-weight:600}',
     '.hdr{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:36px}',
     '.altezza{position:absolute;top:0;left:0;z-index:9;background:#E10020;color:#fff;font:600 14px Inter,sans-serif;padding:8px 12px}',
+    ':host(.xl) .w{width:1200px}:host(.xl) p{font-size:18px}:host(.xl) .k{font-size:15px}:host(.xl) h1{font-size:100px}:host(.xl) h2{font-size:66px}:host(.xl) h3{font-size:34px}:host(.xl) .lead{font-size:22px}:host(.xl) .btn{font-size:18px;min-height:56px;padding:16px 28px}:host(.xl) .foto{height:660px}:host(.xl) .strip .w{font-size:24px}:host(.xl) .intro p{max-width:820px;font-size:21px}:host(.xl) .texts{flex-basis:560px;height:400px}:host(.xl) .card h3{font-size:68px}:host(.xl) .card p{font-size:21px}:host(.xl) .grid3{font-size:20px}:host(.xl) .box{padding:44px}:host(.xl) .amb b{font-size:27px}:host(.xl) .amb small{font-size:17px}:host(.xl) .chips span{font-size:17px;padding:10px 16px}:host(.xl) .chi .w{gap:64px}:host(.xl) .chi .tx p{font-size:20px}:host(.xl) .num b{font-size:58px}:host(.xl) .num small{font-size:16px}:host(.xl) .vids{gap:22px}:host(.xl) .vids figcaption{font-size:18px}:host(.xl) .soc a{padding:32px}:host(.xl) .soc small{font-size:16px}:host(.xl) .soc b{font-size:28px}',
     ':host(.m) .w{width:auto;padding:0 16px}:host(.m) .k{font-size:12px}:host(.m) h1{font-size:44px}:host(.m) h2{font-size:32px;line-height:1.05}:host(.m) h3{font-size:24px}:host(.m) .lead{font-size:16px}:host(.m) .sec{padding-top:52px;padding-bottom:52px}:host(.m) .hero{padding-top:36px;padding-bottom:24px;gap:18px}:host(.m) .hero .l,:host(.m) .hero .r{flex:1 1 100%}:host(.m) .row{flex-direction:column}:host(.m) .btn{width:100%}:host(.m) .foto{height:260px}:host(.m) .strip .w{gap:8px;font-size:14px;justify-content:flex-start}:host(.m) .strip i{display:none}:host(.m) .strip .w span{border:1px solid rgba(28,27,25,.18);padding:7px 10px}:host(.m) .intro{padding-top:48px}:host(.m) .intro p{font-size:16px}:host(.m) .story{height:3000px;margin-top:20px}:host(.m) .stage{display:block;padding:0}:host(.m) .media{position:absolute;inset:0;height:100%;width:100%;aspect-ratio:auto}:host(.m) .texts{position:absolute;left:12px;right:12px;bottom:16px;height:auto;min-height:190px;flex:none;z-index:2}:host(.m) .card{inset:auto 0 0 0;background:rgba(255,255,255,.94);padding:18px;gap:8px;justify-content:flex-start}:host(.m) .card h3{font-size:28px;line-height:1}:host(.m) .card p{font-size:15px;line-height:1.5}:host(.m) .dots{display:none}:host(.m) .box{padding:20px}:host(.m) .grid3{grid-template-columns:repeat(2,minmax(0,1fr));font-size:15px;gap:10px 16px}:host(.m) .amb{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}:host(.m) .amb img{aspect-ratio:1}:host(.m) .amb span{padding:12px}:host(.m) .amb b{font-size:16px}:host(.m) .amb small{display:none}:host(.m) .chips span{font-size:14px;padding:7px 10px}:host(.m) .chi .w{gap:24px;padding:0}:host(.m) .chi img{flex:1 1 100%}:host(.m) .chi .tx{padding:0 16px 8px}:host(.m) .num b{font-size:30px}:host(.m) .vids{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:0 16px 8px}:host(.m) .vids figure{flex:0 0 240px;scroll-snap-align:start}:host(.m) .soc{grid-template-columns:1fr;gap:8px}:host(.m) .soc a{padding:16px;flex-direction:row;justify-content:space-between;align-items:center}:host(.m) .soc b{font-size:18px}',
   ].join('');
 
@@ -171,6 +172,9 @@
       var self = this;
       setTimeout(function () { self._hash(); self._size(); }, 600);
       setTimeout(function () { self._size(); }, 2500);
+      window.addEventListener('load', function () { self._size(); });
+      var n = 0, iv = setInterval(function () { self._size(); if (++n > 12) clearInterval(iv); }, 1500);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { self._size(); });
       this._update();
     }
     disconnectedCallback() {
@@ -198,7 +202,7 @@
     }
     _layout() {
       var w = this.getBoundingClientRect().width || window.innerWidth;
-      this.classList.toggle('m', w < 768);
+      this.classList.toggle('m', w < 768); this.classList.toggle('xl', w >= 1280);
       var vh = window.innerHeight;
       if (window.screen && screen.height && vh > screen.height) vh = screen.height;
       var sh = Math.max(420, vh - this._off);
@@ -215,6 +219,14 @@
       var last = this._r.querySelector('#fc-social');
       var h = last ? last.getBoundingClientRect().bottom - this.getBoundingClientRect().top : this.offsetHeight;
       this._h = h;
+      if (this.getAttribute('altezza-auto') !== 'no' && h > 200) {
+        var hp = Math.ceil(h) + 'px';
+        if (this.style.height !== hp) {
+          this.style.height = hp;
+          var par = this.parentElement;
+          if (par && par !== document.body) { par.style.height = hp; par.style.minHeight = hp; }
+        }
+      }
       var show = (this.getAttribute('mostra-altezza') || '').toLowerCase() === 'si';
       this._alt.hidden = !show;
       if (show) this._alt.textContent = 'Altezza da dare all’elemento in Wix: ' + Math.ceil(h) + ' px (larghezza schermo ' + window.innerWidth + ' px)';
